@@ -41,6 +41,7 @@ DWORD WINAPI Handler(HMODULE hModule)
 
 	while (!GetAsyncKeyState(VK_END) & 1)
 	{
+		// Main function for the entire project, gets ran every loop alongside EndScene and other hooks.
 		core::Run();
 		std::this_thread::sleep_for(ms(100));
 	}

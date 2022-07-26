@@ -2,6 +2,7 @@
 
 #include "../sdk/centity.h"
 
+// Initalizes all global variables
 bool globals::Initalize()
 {
 	client = reinterpret_cast<uintptr_t>(GetModuleHandle(L"client.dll"));
