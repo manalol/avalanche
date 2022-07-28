@@ -7,7 +7,6 @@
 #include "utils/hook.h"
 #include "core/core.h"
 
-
 FILE* Startup()
 {
 	AllocConsole();
@@ -22,9 +21,6 @@ bool Cleanup(FILE* fp, HMODULE hModule)
 	fclose(fp);
 	FreeConsole();
 	FreeLibraryAndExitThread(hModule, 0);
-
-	if (globals::net)
-		delete globals::net;
 	return 0;
 }
 

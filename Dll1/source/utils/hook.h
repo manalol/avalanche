@@ -13,7 +13,7 @@
 #include "renderer/renderer.h"
 
 #include "../core/settings.h"
-#include "../hacks/esp.h"
+#include "../hacks/esp/esp.h"
 
 static void* D3DTable[119];
 namespace hooks

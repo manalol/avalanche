@@ -30,6 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\hacks\esp\esp.h" />
+    <ClInclude Include="source\utils\fnv.h" />
     <ClInclude Include="source\utils\renderer\renderer.h" />
     <ClInclude Include="source\core\settings.h" />
     <ClInclude Include="source\sdk\netvar\manager.h" />
@@ -107,6 +108,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

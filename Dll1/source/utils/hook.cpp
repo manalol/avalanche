@@ -82,10 +82,6 @@ HRESULT __stdcall hooks::EndScene(LPDIRECT3DDEVICE9 device)
 	//renderer::DrawFilledRect({ 200, 200 }, { 300, 300 }, D3DCOLOR_XRGB(255, 0, 0));
 	//renderer::DrawRect({ 200, 200 }, { 300, 300 }, D3DCOLOR_XRGB(0, 255, 0), 4.0f);
 
-	if (!settings::menu::enabled)
-		renderer::DrawText(L"[INS] disable this drawing", renderer::screen_width / 2.0, 5, D3DCOLOR_XRGB(255, 255, 255));
-
-
 	if (settings::esp::enabled)
 		esp::Run();
 
