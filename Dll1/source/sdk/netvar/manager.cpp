@@ -1,23 +1,33 @@
 #include "manager.h"
 
-void CNetvars::DumpRecvTable(RecvTable* recv_table)
+#include <iostream>
+
+
+
+void netvar::DumpRecvTable(const char* client_class, RecvTable* recv_table)
 {
 	for (int i = 0; i < recv_table->m_nProps; ++i)
 	{
-		auto prop = recv_table->m_pProps[i];
-		if (prop.m_pVarName == "baseclass") // Keep looping if we encounter this strange class
+		auto prop = &recv_table->m_pProps[i];
+		if (!prop || isdigit(prop->m_pVarName[0]))
 			continue;
 
-		if (!prop.m_pDataTable) // No need for recursion
-			this->netvars[prop.m_pVarName] = prop.m_Offset;
+		if (fnv::hash(prop->m_pVarName) == fnv::cphash("baseclass"))
+			continue;
+
+		if (!prop->m_pDataTable) 
+		{
+			const auto formatted_string = std::format("{}->{}", client_class, prop->m_pVarName);
+			netvars[fnv::hash(formatted_string.c_str())] = prop->m_Offset;
+		}
 		else
 		{
-			DumpRecvTable(prop.m_pDataTable);
+			DumpRecvTable(client_class, prop->m_pDataTable);
 		}
 	}
 }
 
-void CNetvars::Dump()
+void netvar::Dump()
 {
 	static auto class_head = reinterpret_cast<ClientClass*>(
 		interfaces::client->GetAllClasses()
@@ -26,11 +36,11 @@ void CNetvars::Dump()
 	for (auto client_class = class_head; client_class != nullptr; client_class = client_class->m_pNext)
 	{
 		auto table = client_class->m_pRecvTable;
-		DumpRecvTable(table);
+		DumpRecvTable(client_class->m_pNetworkName, table);
 	}
 }
 
-uintptr_t CNetvars::GetNetvar(std::string netvar_name)
+uintptr_t netvar::GetNetvar(std::string netvar)
 {
-	return netvars[netvar_name];
+	return netvars[fnv::hash(netvar.c_str())];
 }

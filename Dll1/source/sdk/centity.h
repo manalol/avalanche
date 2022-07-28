@@ -8,27 +8,39 @@
 #include "../utils/globals.h"
 #include "cmath.h"
 
+#define NETVAR(func_name, netvar_name, type) type& func_name()\
+{ \
+	static auto offset = netvar::netvars[fnv::cphash(netvar_name)]; \
+	return *reinterpret_cast<type*>(std::uintptr_t(this) + offset); \
+}
+
+
 class CEntity
 {
 public:
-	template <typename type>
-	type GetOffset(std::string netvar_name)
+	NETVAR(health, "CBasePlayer->m_iHealth", int)
+	NETVAR(team, "CBasePlayer->m_iTeam", int)
+	NETVAR(position, "CBasePlayer-m_vecOrigin", CVector3)
+	NETVAR(view, "CBasePlayer->m_vecViewOrigin", CVector3)
+	NETVAR(dormant, "CBasePlayer->m_bDormant", bool)
+
+	auto GetHealth()
 	{
-		return *reinterpret_cast<type*>(std::uintptr_t(this) + globals::net->GetNetvar(netvar_name));
+		return health();
 	}
 
-	int GetHealth()
+	auto GetTeam()
 	{
-		return GetOffset<int>(offsets::health);
+		return team();
 	}
 
-	int GetTeam()
+	auto GetPosition()
 	{
-		return GetOffset<int>(offsets::team);
+		return position();
 	}
 
-	CVector3 GetPosition()
+	auto IsLocalPlayer()
 	{
-		return GetOffset<CVector3>(offsets::position);
+		return reinterpret_cast<CEntity*>(globals::player) == this;
 	}
 };

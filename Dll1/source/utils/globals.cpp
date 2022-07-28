@@ -18,10 +18,9 @@ bool globals::Initalize()
 	interfaces::client = interfaces::GetInterface<ClientInterface>(L"client.dll", "VClient018");
 
 	globals::player = reinterpret_cast<uintptr_t*>(interfaces::entitylist->GetClientEntity(interfaces::engine->GetLocalPlayer()));
-	globals::net = new CNetvars;
 	globals::entitylist = reinterpret_cast<uintptr_t*>(client + offsets::entitylist);
 
-	globals::net->Dump();
+	netvar::Dump();
 
 
 	return true;

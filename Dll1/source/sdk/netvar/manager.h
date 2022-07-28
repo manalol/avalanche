@@ -1,25 +1,24 @@
 #pragma once
 #include <string>
+#include <utility>
 #include <unordered_map>
 
 #include "../interfaces/interface.h"
+#include "../../utils/fnv.h"
+#include "../../utils/globals.h"
+
+
 
 class RecvTable;
-
-
-class CNetvars
+namespace netvar
 {
-public:
-    std::unordered_map<std::string, uintptr_t> netvars;
+    inline std::unordered_map<std::uint32_t, uintptr_t> netvars;
 
-public:
     void Dump();
-    void DumpRecvTable(RecvTable* recv_table);
-
-    uintptr_t GetNetvar(std::string netvar_name);
-};
-
-
+    void DumpRecvTable(const char* client_class, RecvTable* recv_table);
+    uintptr_t GetNetvar(std::string netvar);
+}
+ 
 class RecvProp
 {
 public:
@@ -62,3 +61,5 @@ public:
     ClientClass* m_pNext;
     int                m_ClassID;
 };
+
+

@@ -3,7 +3,6 @@
 #include <string>
 #include <Windows.h>
 
-
 #include "../sdk/netvar/manager.h"
 
 namespace offsets
@@ -20,7 +19,6 @@ namespace globals
 {
 	bool Initalize();
 
-	inline CNetvars* net;
 	inline uintptr_t client;
 	inline uintptr_t engine;
 
