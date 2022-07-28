@@ -1,6 +1,6 @@
 #include "globals.h"
 
-#include "../sdk/centity.h"
+
 
 // Initalizes all global variables
 bool globals::Initalize()
@@ -13,11 +13,16 @@ bool globals::Initalize()
 	if (!engine)
 		return false;
 
-	globals::entitylist = interfaces::GetInterface<IClientEntityList>(L"client.dll", "VClientEntityList003");
+	interfaces::entitylist = interfaces::GetInterface<EntityListInterface>(L"client.dll", "VClientEntityList003");
+	interfaces::engine = interfaces::GetInterface<EngineClientInterface>(L"engine.dll", "VEngineClient014");
+	interfaces::client = interfaces::GetInterface<ClientInterface>(L"client.dll", "VClient018");
 
-	globals::player = reinterpret_cast<CEntity*>(entitylist->GetClientEntity(0));
+	globals::player = reinterpret_cast<uintptr_t*>(interfaces::entitylist->GetClientEntity(interfaces::engine->GetLocalPlayer()));
 	globals::net = new CNetvars;
+	globals::entitylist = reinterpret_cast<uintptr_t*>(client + offsets::entitylist);
 
 	globals::net->Dump();
+
+
 	return true;
 }

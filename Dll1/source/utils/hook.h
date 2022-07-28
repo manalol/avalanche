@@ -10,6 +10,10 @@
 #pragma comment(lib, "d3d9.lib")
 
 #include "memory.h"
+#include "renderer/renderer.h"
+
+#include "../core/settings.h"
+#include "../hacks/esp.h"
 
 static void* D3DTable[119];
 namespace hooks

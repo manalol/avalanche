@@ -1,5 +1,7 @@
 #include "hook.h"
 
+
+
 // Sets up our endscene hook by using an endscene hook
 bool hooks::Initalize()
 {	
@@ -29,9 +31,11 @@ bool hooks::Initalize()
 	}
 
 	memcpy(D3DTable, *reinterpret_cast<void***>(dummy), sizeof(D3DTable));
+	
 
 	// Setup our trampoline hook (we hook the 42nd entry because the EndScene VTable is shared by all Direct3d Objects
 	o_endscene = reinterpret_cast<endscene_t>(memory::Tramphook(static_cast<BYTE*>(D3DTable[42]), reinterpret_cast<BYTE*>(hooks::EndScene), 7, true));
+	
 
 	d3d->Release();
 	dummy->Release();
@@ -66,5 +70,24 @@ HWND hooks::GetThreadWindow()
 // Do all the drawing in endscene
 HRESULT __stdcall hooks::EndScene(LPDIRECT3DDEVICE9 device)
 {
+	if (!renderer::device)
+		renderer::device = device;
+	
+	D3DVIEWPORT9 viewport{ NULL };
+	renderer::device->GetViewport(&viewport);
+
+	renderer::screen_height = viewport.Height;
+	renderer::screen_width = viewport.Width;
+
+	//renderer::DrawFilledRect({ 200, 200 }, { 300, 300 }, D3DCOLOR_XRGB(255, 0, 0));
+	//renderer::DrawRect({ 200, 200 }, { 300, 300 }, D3DCOLOR_XRGB(0, 255, 0), 4.0f);
+
+	if (!settings::menu::enabled)
+		renderer::DrawText(L"[INS] disable this drawing", renderer::screen_width / 2.0, 5, D3DCOLOR_XRGB(255, 255, 255));
+
+
+	if (settings::esp::enabled)
+		esp::Run();
+
 	return o_endscene(device);
 }

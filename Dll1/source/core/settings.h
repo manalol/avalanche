@@ -4,12 +4,17 @@ namespace settings
 {
 	namespace aim
 	{
-		bool enabled = false;
+		inline bool enabled = false;
 	}
 
 	namespace esp
 	{
-		bool enabled = false;
-		bool health = false;
+		inline bool enabled = false;
+		inline bool health = false;
+	}
+
+	namespace menu
+	{
+		inline bool enabled = false;
 	}
 }

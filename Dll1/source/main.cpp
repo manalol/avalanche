@@ -7,7 +7,6 @@
 #include "utils/hook.h"
 #include "core/core.h"
 
-using ms = std::chrono::duration<double, std::milli>;
 
 FILE* Startup()
 {
@@ -29,7 +28,7 @@ bool Cleanup(FILE* fp, HMODULE hModule)
 	return 0;
 }
 
-DWORD WINAPI Handler(HMODULE hModule)
+DWORD WINAPI Handler(HMODULE hModule)	
 {
 	auto output = Startup();
 

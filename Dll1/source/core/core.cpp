@@ -1,17 +1,12 @@
 #include "core.h"
+#include "settings.h"
 
 void core::Run()
 {
+	if (GetAsyncKeyState(VK_F1) & 1)
+		settings::esp::enabled = !settings::esp::enabled;
 
+	if (GetAsyncKeyState(VK_F2) & 1)
+		settings::menu::enabled = !settings::menu::enabled;
 
-	for (int i = 0; i < 64; ++i)
-	{
-		auto entity = reinterpret_cast<CEntity*>(globals::entitylist->GetClientEntity(i));
-
-		if (!entity)
-			continue;
-
-		std::cout << entity->GetOffset<int>("m_iHealth") << "\n";
-	}
-	std::cout << "=============\n";
 }

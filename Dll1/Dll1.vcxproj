@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\hacks\esp.cpp" />
+    <ClCompile Include="source\utils\renderer\renderer.cpp" />
     <ClCompile Include="source\sdk\netvar\manager.cpp" />
     <ClCompile Include="source\core\core.cpp" />
     <ClCompile Include="source\utils\globals.cpp" />
@@ -27,6 +29,9 @@
     <ClCompile Include="source\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\hacks\esp.h" />
+    <ClInclude Include="source\utils\renderer\renderer.h" />
+    <ClInclude Include="source\core\settings.h" />
     <ClInclude Include="source\sdk\netvar\manager.h" />
     <ClInclude Include="source\sdk\centity.h" />
     <ClInclude Include="source\sdk\interfaces\interface.h" />

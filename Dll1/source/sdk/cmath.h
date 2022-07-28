@@ -22,3 +22,4 @@ class CVector4
 public:
 	float x, y, z, w;
 };
+

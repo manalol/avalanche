@@ -20,7 +20,7 @@ void CNetvars::DumpRecvTable(RecvTable* recv_table)
 void CNetvars::Dump()
 {
 	static auto class_head = reinterpret_cast<ClientClass*>(
-		interfaces::GetInterface<IBaseClientDLL>(L"client.dll", "VClient018")->GetAllClasses()
+		interfaces::client->GetAllClasses()
 	); // Get the head of the linked list and start looping through every client class
 
 	for (auto client_class = class_head; client_class != nullptr; client_class = client_class->m_pNext)
